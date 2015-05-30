@@ -10,10 +10,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.facebook.FacebookSdk;
+import com.facebook.Profile;
 import com.firebase.client.Firebase;
 
 
@@ -56,7 +58,6 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
     }
 
     @Override
@@ -66,6 +67,7 @@ public class MainActivity extends ActionBarActivity
         if (mSharedPreferences.getString(FB_ACCESS_TOKEN, null) == null) {
             startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), 0);
         }
+
     }
 
     @Override
@@ -88,7 +90,7 @@ public class MainActivity extends ActionBarActivity
                 currentFragment = MainPageFragment.newInstance();
                 break;
             default:
-                currentFragment = PlaceholderFragment.newInstance(position + 1);
+                currentFragment = PlaceholderFragment.newInstance(position);
                 break;
         }
 
@@ -99,13 +101,13 @@ public class MainActivity extends ActionBarActivity
 
     public void onSectionAttached(int number) {
         switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
+            case 0:
+                mTitle = "Welcome, " + Profile.getCurrentProfile().getFirstName();
                 break;
-            case 2:
+            case 1:
                 mTitle = getString(R.string.title_section2);
                 break;
-            case 3:
+            case 2:
                 mTitle = getString(R.string.title_section3);
                 break;
         }
@@ -119,17 +121,17 @@ public class MainActivity extends ActionBarActivity
     }
 
     //    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-//            // Only show items in the action bar relevant to this screen
-//            // if the drawer is not showing. Otherwise, let the drawer
-//            // decide what to show in the action bar.
-//            getMenuInflater().inflate(R.menu.main, menu);
-//            restoreActionBar();
-//            return true;
-//        }
-//        return super.onCreateOptionsMenu(menu);
-//    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!mNavigationDrawerFragment.isDrawerOpen()) {
+            // Only show items in the action bar relevant to this screen
+            // if the drawer is not showing. Otherwise, let the drawer
+            // decide what to show in the action bar.
+            //getMenuInflater().inflate(R.menu.main, menu);
+            restoreActionBar();
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
 //
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {

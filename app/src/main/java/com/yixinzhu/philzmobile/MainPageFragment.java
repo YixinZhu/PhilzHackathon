@@ -1,5 +1,6 @@
 package com.yixinzhu.philzmobile;
 
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -46,5 +47,11 @@ public class MainPageFragment extends Fragment {
             }
         });
         return rootView;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        ((MainActivity) activity).onSectionAttached(0);
     }
 }
