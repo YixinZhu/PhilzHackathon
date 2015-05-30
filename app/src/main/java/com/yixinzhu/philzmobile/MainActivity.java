@@ -35,7 +35,7 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
-    public Firebase mFirebaseRef = new Firebase("https://philzapp.firebaseio.com/");
+    public static Firebase mfireBaseRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,8 @@ public class MainActivity extends ActionBarActivity
 
         Firebase.setAndroidContext(getApplicationContext());
         FacebookSdk.sdkInitialize(getApplicationContext());
+
+        mfireBaseRef = new Firebase("https://philzapp.firebaseio.com/");
 
         setContentView(R.layout.activity_main);
 
