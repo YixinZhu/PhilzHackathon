@@ -32,7 +32,7 @@ public class LoginActivity extends Activity {
     }
 
     private void initializeFacebook() {
-        FacebookSdk.sdkInitialize(getApplicationContext());
+
         mCallbackManager = CallbackManager.Factory.create();
         mLoginButton.setReadPermissions("public_profile", "email", "user_friends");
         LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
@@ -43,6 +43,8 @@ public class LoginActivity extends Activity {
 
                 mSharePrefs.putString(MainActivity.FB_ACCESS_TOKEN, loginResult.getAccessToken().getToken()).apply();
                 mSharePrefs.putString(MainActivity.FB_USER_ID, loginResult.getAccessToken().getUserId()).apply();
+                setResult(RESULT_OK);
+                finish();
             }
 
             @Override

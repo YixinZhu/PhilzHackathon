@@ -1,6 +1,8 @@
 package com.yixinzhu.philzmobile;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -18,6 +20,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.facebook.FacebookSdk;
+
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -30,6 +34,8 @@ public class MainActivity extends ActionBarActivity
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
+    private SharedPreferences mSharedPreferences;
+
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -37,6 +43,8 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
@@ -49,6 +57,23 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSharedPreferences = getSharedPreferences(PHILZ_PREFS, MODE_PRIVATE);
+        if (mSharedPreferences.getString(FB_ACCESS_TOKEN, null) == null) {
+            startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), 0);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) {
+            finish();
+        }
     }
 
     @Override
