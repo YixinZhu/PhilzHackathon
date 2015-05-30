@@ -2,8 +2,10 @@ package com.yixinzhu.philzmobile;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -32,12 +34,13 @@ public class LoginActivity extends Activity {
     }
 
     private void initializeFacebook() {
-
         mCallbackManager = CallbackManager.Factory.create();
         mLoginButton.setReadPermissions("public_profile", "email", "user_friends");
-        LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+        Log.e("init", "init");
+        mLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                Log.e("success", "success");
                 SharedPreferences.Editor mSharePrefs =
                         getSharedPreferences(MainActivity.PHILZ_PREFS, MODE_PRIVATE).edit();
 
@@ -49,11 +52,12 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onCancel() {
-
+                Log.e("cancel", "cancel");
             }
 
             @Override
             public void onError(FacebookException e) {
+                Log.e("error", "error");
                 showErrorDialog(e);
             }
         });
@@ -68,5 +72,11 @@ public class LoginActivity extends Activity {
                 .setMessage(e.getLocalizedMessage())
                 .setNegativeButton("Ok", null)
                 .show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }
