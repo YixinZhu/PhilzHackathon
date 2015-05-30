@@ -78,8 +78,20 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
+
+        Fragment currentFragment;
+
+        switch (position) {
+            case 0:
+                currentFragment = MainPageFragment.newInstance();
+                break;
+            default:
+                currentFragment = PlaceholderFragment.newInstance(position + 1);
+                break;
+        }
+
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, currentFragment)
                 .commit();
     }
 
@@ -160,9 +172,9 @@ public class MainActivity extends ActionBarActivity
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
+                Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.fragment_main, container, false);
+
         }
 
         @Override
