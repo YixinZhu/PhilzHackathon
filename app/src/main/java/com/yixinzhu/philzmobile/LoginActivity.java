@@ -36,11 +36,9 @@ public class LoginActivity extends Activity {
     private void initializeFacebook() {
         mCallbackManager = CallbackManager.Factory.create();
         mLoginButton.setReadPermissions("public_profile", "email", "user_friends");
-        Log.e("init", "init");
         mLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Log.e("success", "success");
                 SharedPreferences.Editor mSharePrefs =
                         getSharedPreferences(MainActivity.PHILZ_PREFS, MODE_PRIVATE).edit();
 
@@ -52,12 +50,10 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onCancel() {
-                Log.e("cancel", "cancel");
             }
 
             @Override
             public void onError(FacebookException e) {
-                Log.e("error", "error");
                 showErrorDialog(e);
             }
         });
