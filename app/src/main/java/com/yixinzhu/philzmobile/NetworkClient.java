@@ -1,8 +1,9 @@
 package com.yixinzhu.philzmobile;
 
+import com.yixinzhu.philzmobile.Network.JSLandingPageData;
+
 import retrofit.RestAdapter;
 import retrofit.http.GET;
-import retrofit.http.Query;
 import rx.Observable;
 
 public class NetworkClient {
@@ -13,19 +14,18 @@ public class NetworkClient {
     private NetworkClient() {}
 
     final static PhilzNetworkService mNetworkService = new RestAdapter.Builder()
-            .setEndpoint("https://ajax.googleapis.com").build().create(PhilzNetworkService.class);
+            .setEndpoint("https://philzapp.firebaseio.com").build().create(PhilzNetworkService.class);
 
     //https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=fuzzy%20monkey
 
     private interface PhilzNetworkService {
-        @GET("/ajax/services/search/images?v=1.0")
-        Observable<Object> getImagesBySearchTerm(@Query("q") String search_term,
-                @Query("start") int index);
+        @GET("/landingPageData.json")
+        Observable<JSLandingPageData> getLandingPageData();
 
     }
 
-    public Observable<Object> getImageBySearchTerm(String search_term, int index) {
-        return mNetworkService.getImagesBySearchTerm(search_term, index);
+    public Observable<JSLandingPageData> getLandingPageData() {
+        return mNetworkService.getLandingPageData();
     }
 
 
