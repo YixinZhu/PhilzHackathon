@@ -23,6 +23,7 @@ public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     public static final String PHILZ_PREFS = "philz_preferences";
     public static final String FB_ACCESS_TOKEN = "facebook_access_token";
+    public static final String FB_USER_ID = "facebook_user_id";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
