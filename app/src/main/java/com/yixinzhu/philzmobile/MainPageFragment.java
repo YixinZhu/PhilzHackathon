@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.yixinzhu.philzmobile.Network.JSLandingPageData;
+
+import java.util.Random;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -41,10 +44,10 @@ public class MainPageFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Uri uri = Uri.parse(jsLandingPageData.imageUrl);
+                        Uri uri = Uri.parse(jsLandingPageData.imageUrl[new Random().nextInt(jsLandingPageData.imageUrl.length)]);
                         Picasso.with(getActivity()).load(uri).resize(rootView.getWidth(), rootView.getHeight())
                                 .centerCrop().into(mImageView);
-                        mTextView.setText(jsLandingPageData.quote);
+                        mTextView.setText(jsLandingPageData.quote[new Random().nextInt(jsLandingPageData.quote.length)]);
                     }
                 });
             }
