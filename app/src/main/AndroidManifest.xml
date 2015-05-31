@@ -21,6 +21,7 @@
         </activity>
 
         <activity android:name=".LoginActivity"/>
+        <activity android:name=".BaristaMatchActivity"/>
 
         <activity android:name="com.facebook.FacebookActivity"
                   android:configChanges=
