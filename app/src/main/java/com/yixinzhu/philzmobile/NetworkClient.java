@@ -1,6 +1,7 @@
 package com.yixinzhu.philzmobile;
 
 import com.yixinzhu.philzmobile.Network.JSLandingPageData;
+import com.yixinzhu.philzmobile.Network.JSLoginData;
 
 import retrofit.RestAdapter;
 import retrofit.http.GET;
@@ -16,17 +17,19 @@ public class NetworkClient {
     final static PhilzNetworkService mNetworkService = new RestAdapter.Builder()
             .setEndpoint("https://philzapp.firebaseio.com").build().create(PhilzNetworkService.class);
 
-    //https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=fuzzy%20monkey
-
     private interface PhilzNetworkService {
         @GET("/landingPageData.json")
         Observable<JSLandingPageData> getLandingPageData();
 
+        @GET("/loginData.json")
+        Observable<JSLoginData> getLoginData();
     }
 
     public Observable<JSLandingPageData> getLandingPageData() {
         return mNetworkService.getLandingPageData();
     }
 
-
+    public Observable<JSLoginData> getLoginData() {
+        return mNetworkService.getLoginData();
+    }
 }

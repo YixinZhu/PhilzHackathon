@@ -36,6 +36,7 @@ public class MainActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private DrawerLayout mDrawerLayout;
 
     public static Firebase mfireBaseRef;
 
@@ -46,7 +47,14 @@ public class MainActivity extends ActionBarActivity
         Firebase.setAndroidContext(getApplicationContext());
         FacebookSdk.sdkInitialize(getApplicationContext());
 
+        mSharedPreferences = getSharedPreferences(PHILZ_PREFS, MODE_PRIVATE);
+
         mfireBaseRef = new Firebase("https://philzapp.firebaseio.com/");
+
+        if (mSharedPreferences.getString(FB_ACCESS_TOKEN, null) == null) {
+            startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), 0);
+            return;
+        }
 
         setContentView(R.layout.activity_main);
 
@@ -55,19 +63,18 @@ public class MainActivity extends ActionBarActivity
         mTitle = getTitle();
 
         // Set up the drawer.
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+                mDrawerLayout);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mSharedPreferences = getSharedPreferences(PHILZ_PREFS, MODE_PRIVATE);
         if (mSharedPreferences.getString(FB_ACCESS_TOKEN, null) == null) {
             startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), 0);
         }
-
     }
 
     @Override
@@ -102,7 +109,11 @@ public class MainActivity extends ActionBarActivity
     public void onSectionAttached(int number) {
         switch (number) {
             case 0:
-                mTitle = "Welcome, " + Profile.getCurrentProfile().getFirstName();
+                if (Profile.getCurrentProfile() != null) {
+                    mTitle = "Welcome, " + Profile.getCurrentProfile().getFirstName();
+                } else {
+                    mTitle = "Welcome!";
+                }
                 break;
             case 1:
                 mTitle = getString(R.string.title_section2);
@@ -122,7 +133,7 @@ public class MainActivity extends ActionBarActivity
 
     //    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
+        if (mNavigationDrawerFragment != null && !mNavigationDrawerFragment.isDrawerOpen()) {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.

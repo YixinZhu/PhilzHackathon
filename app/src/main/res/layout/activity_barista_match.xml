@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center"
+        android:background="@color/white"
         android:gravity="center">
 
         <ImageView
@@ -54,7 +55,9 @@
             android:layout_height="wrap_content"
             android:text="Submit Order"
             android:layout_margin="10dp"
-            android:id="@+id/submitOrder"/>
+            android:id="@+id/submitOrder"
+            android:textColor="@color/white"
+            android:background="@color/transparent"/>
 
     </LinearLayout>
 

@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +25,7 @@ import rx.functions.Action1;
 public class MainPageFragment extends Fragment {
     @InjectView(R.id.backgroundImage) ImageView mImageView;
     @InjectView(R.id.quoteTextView) TextView mTextView;
+    @InjectView(R.id.authorTextView) TextView mAuthorTextView;
     @InjectView(R.id.requestBaristaButton) Button mButton;
 
     public static MainPageFragment newInstance() {
@@ -44,10 +44,13 @@ public class MainPageFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Uri uri = Uri.parse(jsLandingPageData.imageUrl[new Random().nextInt(jsLandingPageData.imageUrl.length)]);
-                        Picasso.with(getActivity()).load(uri).resize(rootView.getWidth(), rootView.getHeight())
+                        int imageIndex = new Random().nextInt(jsLandingPageData.imageUrls.length);
+                        int quoteIndex = new Random().nextInt(jsLandingPageData.quotes.length);
+                        Uri uri = Uri.parse(jsLandingPageData.imageUrls[imageIndex]);
+                        Picasso.with(getActivity()).load(uri).resize(mImageView.getWidth(), mImageView.getHeight())
                                 .centerCrop().into(mImageView);
-                        mTextView.setText(jsLandingPageData.quote[new Random().nextInt(jsLandingPageData.quote.length)]);
+                        mTextView.setText(jsLandingPageData.quotes[quoteIndex]);
+                        mAuthorTextView.setText(jsLandingPageData.authors[quoteIndex]);
                     }
                 });
             }
