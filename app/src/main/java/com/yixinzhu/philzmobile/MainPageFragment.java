@@ -46,7 +46,7 @@ public class MainPageFragment extends Fragment {
                     public void run() {
                         int imageIndex = new Random().nextInt(jsLandingPageData.imageUrls.length);
                         int quoteIndex = new Random().nextInt(jsLandingPageData.quotes.length);
-                        Uri uri = Uri.parse(jsLandingPageData.imageUrls[imageIndex]);
+                        Uri uri = Uri.parse(jsLandingPageData.imageUrls[quoteIndex]);
                         Picasso.with(getActivity()).load(uri).resize(mImageView.getWidth(), mImageView.getHeight())
                                 .centerCrop().into(mImageView);
                         mTextView.setText(jsLandingPageData.quotes[quoteIndex]);
