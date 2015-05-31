@@ -95,7 +95,7 @@ public class BaristaMatchActivity extends Activity {
             public void run() {
                 mProgressDialog.dismiss();
                 Picasso.with(BaristaMatchActivity.this).load(R.drawable.barista).into(mImageView);
-                mTextView.setText("Your Barista is Megan!");
+                mTextView.setText("Megan");
             }
         });
     }
