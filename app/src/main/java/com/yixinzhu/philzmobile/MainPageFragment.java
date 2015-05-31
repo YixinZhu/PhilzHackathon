@@ -44,13 +44,12 @@ public class MainPageFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        int imageIndex = new Random().nextInt(jsLandingPageData.imageUrls.length);
-                        int quoteIndex = new Random().nextInt(jsLandingPageData.quotes.length);
-                        Uri uri = Uri.parse(jsLandingPageData.imageUrls[quoteIndex]);
+                        int index = new Random().nextInt(jsLandingPageData.quotes.length);
+                        Uri uri = Uri.parse(jsLandingPageData.imageUrls[index]);
                         Picasso.with(getActivity()).load(uri).resize(mImageView.getWidth(), mImageView.getHeight())
                                 .centerCrop().into(mImageView);
-                        mTextView.setText(jsLandingPageData.quotes[quoteIndex]);
-                        mAuthorTextView.setText(jsLandingPageData.authors[quoteIndex]);
+                        mTextView.setText(jsLandingPageData.quotes[index]);
+                        mAuthorTextView.setText(jsLandingPageData.authors[index]);
                     }
                 });
             }
